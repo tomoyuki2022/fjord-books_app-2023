@@ -30,23 +30,25 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  views:
-    resources:
-      title: "Title"
-      memo: "Memo"
-      author: "Author"
-      picture: "Picture"
-    actions:
-      books: "Books"
-      new: "New book"
-      show: "Show this book"
-      back: "Back to books"
-      edit: "Edit this book"
-      destroy: "Destroy this book"
-      editing: "Editing book"
-    messages:
-      success_create: "Book was successfully created."
-      success_update: "Book was successfully updated."
-      success_destroy: "Book was successfully destroyed."
+  activerecord:
+    models:
+      book: "Book"
+    attributes:
+      book:
+        title: "Title"
+        memo: "Memo"
+        author: "Author"
+        picture: "Picture"
+  actions:
+    books: "Books"
+    new_book: "New book"
+    show_book: "Show this book"
+    back_to_books: "Back to books"
+    edit_book: "Edit this book"
+    destroy_book: "Destroy this book"
+    editing: "Editing book"
+  messages:
+    successfully_created: "%{model} was successfully created."
+    successfully_updated: "%{model} was successfully updated."
+    successfully_destroyed: "%{model} was successfully destroyed."
 

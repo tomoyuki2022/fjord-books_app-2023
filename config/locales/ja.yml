@@ -182,22 +182,25 @@ ja:
       short: "%m/%d %H:%M"
     pm: 午後
     
-  views:
-    resources:
-      title: "タイトル"
-      memo: "メモ"
-      author: "著者"
-      picture: "写真"
-    actions:
-      books: "本一覧"
-      new: "新しい本"
-      show: "この本を表示する"
-      back: "本一覧に戻る"
-      edit: "この本を編集する"
-      destroy: "この本を削除する"
-      editing: "編集"
-    messages:
-      success_create: "本の作成に成功しました"
-      success_update: "本の更新に成功しました"
-      success_destroy: "本の削除に成功しました"
+  activerecord:
+    models:
+      book: "本"
+    attributes:
+      book:
+        title: "タイトル"
+        memo: "メモ"
+        author: "著者"
+        picture: "写真"
+  actions:
+    books: "本一覧"
+    new_book: "新しい本"
+    show_book: "この本を表示する"
+    back_to_books: "本一覧に戻る"
+    edit_book: "この本を編集する"
+    destroy_book: "この本を削除する"
+    editing: "編集"
+  messages:
+    successfully_created: "%{model}の作成に成功しました"
+    successfully_updated: "%{model}の更新に成功しました"
+    successfully_destroyed: "%{model}の削除に成功しました"
 
