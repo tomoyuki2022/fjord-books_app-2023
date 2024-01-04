@@ -1,0 +1,11 @@
+<h1><%= User.human_attribute_name('user_datails') %></h1>
+<h3><%= User.human_attribute_name('email') %></h3>
+<p><%= @user.email %></p>
+<h3><%= User.human_attribute_name('postal_code') %></h3>
+<p><%= @user.postal_code %></p>
+<h3><%= User.human_attribute_name('address') %></h3>
+<p><%= @user.address %></p>
+<h3><%= User.human_attribute_name('introduction') %></h3>
+<p><%= @user.introduction %></p>
+<p><%= link_to t('devise.action.users_to_back'), users_path %></p>
+<p><%= link_to t('devise.action.books_to_back'), books_path %></p>
