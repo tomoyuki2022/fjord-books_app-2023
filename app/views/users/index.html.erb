@@ -1,0 +1,8 @@
+<h1><%= User.human_attribute_name('users') %></h1>
+<ul>
+  <% @users.each do |user| %>
+    <li><%= link_to user.email, user_path(user) %></li>
+  <% end %>
+</ul>
+<%= paginate @users %>
+<p><%= link_to t('devise.action.books_to_back'), books_path %></p>
