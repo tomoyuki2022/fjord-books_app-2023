@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   def after_sign_in_path_for(_resource)
-    user_path(id: current_user.id)
+    books_path
   end
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
