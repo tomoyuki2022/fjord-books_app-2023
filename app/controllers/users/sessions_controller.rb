@@ -25,10 +25,6 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  def after_sign_in_path_for(_resource)
-    books_path
-  end
-
   def after_sign_out_path_for(_resource)
     new_user_session_path
   end
