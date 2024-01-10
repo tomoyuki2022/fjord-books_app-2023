@@ -25,13 +25,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  def destroy
-    resource.destroy
-    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    set_flash_message! :notice, :destroyed
-    yield resource if block_given?
-    respond_with_navigational(resource) { redirect_to new_user_registration_path }
-  end
+  # def destroy
+  #   super
+  # end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -55,11 +51,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  def after_sign_up_path_for(_resource)
+  def after_sign_up_path_for(resource)
     user_path(id: current_user.id)
   end
 
-  def after_update_path_for(_resource)
+  def after_update_path_for(resource)
     user_path(id: current_user.id)
   end
   # The path used after sign up for inactive accounts.
