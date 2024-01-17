@@ -15,6 +15,10 @@
   <%= render 'devise/registrations/profile_fields', f: f %>
 
   <div class="field">
+  <%= f.label User.human_attribute_name(:current_icon) %>
+  <%= image_tag current_user.icon.variant(resize_to_limit: [100, 100]) if current_user.icon.attached? %>
+  </div>
+  <div class="field">
     <%= f.label :password %> <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it') %>)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
