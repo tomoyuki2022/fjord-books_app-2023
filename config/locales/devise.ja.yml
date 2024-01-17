@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    models:
+      user: 'ユーザー'
+    attributes:
+      user:
+       users: 'ユーザー一覧'
+       user_datails: 'ユーザーの詳細'
+       email: 'メールアドレス'
+       postal_code: '郵便番号'
+       address: '住所'
+       introduction: '自己紹介'
+  devise:
+    action:
+      users_to_back: 'ユーザー一覧へ戻る'
+      books_to_back: '本一覧へ戻る'
+      edit_profile: 'プロフィールの編集'
+      logout: 'ログアウト'
+      sign_in: 'ログイン'
+      sign_up: 'アカウント登録'
+    message:
+      delete?: '※削除を取り消すことはできません'
+      logged_in: 'としてログイン中'
