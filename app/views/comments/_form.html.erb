@@ -1,0 +1,6 @@
+<h2><%= Comment.model_name.human %></h2>
+
+<%= form_with model: [commentable, comment] do |f| %>
+  <%= f.text_area :content, required: true %>
+  <%= f.submit t('comments.form.create') %>
+<% end %>
