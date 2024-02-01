@@ -2,7 +2,9 @@
 
 <div class="show-item">
   <%= render @book %>
+  <%= render 'comments/comments', commentable: @book, comments: @comments %>
 </div>
+<%= render 'comments/form', commentable: @book, comment: @comment %>
 
 <nav class="page-nav">
   <%= link_to t('views.common.edit', name: Book.model_name.human.downcase), edit_book_path(@book) %> |
