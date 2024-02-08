@@ -38,6 +38,7 @@ class ReportsController < ApplicationController
 
   # PATCH/PUT /reports/1
   def update
+    @report = current_user.reports.find(params[:id])
     respond_to do |format|
       if @report.update(report_params)
         format.html { redirect_to report_url(@report), notice: t('controllers.common.notice_update', name: Report.model_name.human) }
@@ -49,8 +50,8 @@ class ReportsController < ApplicationController
 
   # DELETE /reports/1
   def destroy
-    @report.destroy
-
+    @report = current_user.reports.find(params[:id])
+    @report.destroy!
     respond_to do |format|
       format.html { redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) }
     end
