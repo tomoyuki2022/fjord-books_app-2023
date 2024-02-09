@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[show edit update destroy]
+  before_action :set_report, only: %i[show]
+  before_action :current_user_report, only: %i[edit update destroy]
 
   # GET /reports
   def index
@@ -38,7 +39,6 @@ class ReportsController < ApplicationController
 
   # PATCH/PUT /reports/1
   def update
-    @report = current_user.reports.find(params[:id])
     respond_to do |format|
       if @report.update(report_params)
         format.html { redirect_to report_url(@report), notice: t('controllers.common.notice_update', name: Report.model_name.human) }
@@ -50,7 +50,6 @@ class ReportsController < ApplicationController
 
   # DELETE /reports/1
   def destroy
-    @report = current_user.reports.find(params[:id])
     @report.destroy!
     respond_to do |format|
       format.html { redirect_to reports_url, notice: t('controllers.common.notice_destroy', name: Report.model_name.human) }
@@ -62,6 +61,10 @@ class ReportsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_report
     @report = Report.find(params[:id])
+  end
+
+  def current_user_report
+    @report = current_user.reports.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
