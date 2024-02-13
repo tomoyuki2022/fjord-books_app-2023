@@ -2,7 +2,7 @@
 
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show]
-  before_action :current_user_report, only: %i[edit update destroy]
+  before_action :set_current_user_report, only: %i[edit update destroy]
 
   # GET /reports
   def index
@@ -63,7 +63,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
   end
 
-  def current_user_report
+  def set_current_user_report
     @report = current_user.reports.find(params[:id])
   end
 
