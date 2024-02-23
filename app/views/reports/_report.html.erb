@@ -6,7 +6,7 @@
 
   <p>
     <strong><%= Report.human_attribute_name(:content) %>:</strong>
-    <%= format_content report.content %>
+    <%= raw Rinku.auto_link(h(format_content(report.content)), :all, 'target="_blank"', nil, Rinku::AUTOLINK_SHORT_DOMAINS) %>
   </p>
 
   <p>
