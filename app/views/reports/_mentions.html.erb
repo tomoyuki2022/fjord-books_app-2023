@@ -1,0 +1,8 @@
+<h3><%= t('views.mention.mentioned', name: Report.model_name.human) %></h3>
+<ul>
+  <% report.mentioned_reports.each do |mentioned_report| %>
+    <li>
+      <%= link_to mentioned_report.title, mentioned_report %>
+    </li>
+  <% end %>
+</ul>
