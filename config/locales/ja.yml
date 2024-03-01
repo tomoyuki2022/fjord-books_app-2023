@@ -204,6 +204,7 @@ ja:
       truncate: '…'
     mention:
       mentioned: "この%{name}は以下の%{name}からリンクされています。"
+      failure: メンションに失敗しました
   controllers:
     common:
       notice_create: "%{name}が作成されました。"
