@@ -23,4 +23,23 @@ class Report < ApplicationRecord
   def extract_ids
     content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.map(&:to_i)
   end
+
+  def create_mention
+    extracted_ids = extract_ids.uniq
+    build_mentions(id, extracted_ids)
+  end
+
+  def update_mention
+    extracted_ids = extract_ids.uniq
+    Mention.where(mentioning_report_id: id).destroy_all
+    build_mentions(id, extracted_ids)
+  end
+
+  private
+
+  def build_mentions(mentioning_report, mentioned_reports)
+    mentioned_reports.each do |mentioned_report|
+      Mention.create!(mentioning_report_id: mentioning_report, mentioned_report_id: mentioned_report)
+    end
+  end
 end
