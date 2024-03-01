@@ -22,7 +22,12 @@ class ReportsController < ApplicationController
     ActiveRecord::Base.transaction do
       @report = current_user.reports.new(report_params)
       if @report.save
-        create_mention
+        begin
+          @report.create_mention
+        rescue ActiveRecord::RecordInvalid
+          flash.now[:alert] = t('views.mention.failure')
+          render :new, status: :unprocessable_entity and return
+        end
         redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
       else
         render :new, status: :unprocessable_entity
@@ -33,7 +38,12 @@ class ReportsController < ApplicationController
   def update
     ActiveRecord::Base.transaction do
       if @report.update(report_params)
-        update_mention
+        begin
+          @report.update_mention
+        rescue ActiveRecord::RecordInvalid
+          flash.now[:alert] = t('views.mention.failure')
+          render :edit, status: :unprocessable_entity and return
+        end
         redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
       else
         render :edit, status: :unprocessable_entity
@@ -55,22 +65,5 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
-  end
-
-  def create_mention
-    id = @report.id
-    extracted_ids = @report.extract_ids.uniq
-    extracted_ids.each do |extracted_id|
-      Mention.create!(mentioning_report_id: id, mentioned_report_id: extracted_id)
-    end
-  end
-
-  def update_mention
-    id = @report.id
-    extracted_ids = @report.extract_ids.uniq
-    Mention.where(mentioning_report_id: id).destroy_all
-    extracted_ids.each do |extracted_id|
-      Mention.create!(mentioning_report_id: id, mentioned_report_id: extracted_id)
-    end
   end
 end
