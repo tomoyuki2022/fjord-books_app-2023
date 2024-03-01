@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   resources :reports do
     scope module: :reports do
       resources :comments, only: :create
-      resources :mentions, only: %i(create destroy)
-      get 'mentioning_reports' => 'mentions#mentioning_reports', as: 'mentioning_reports'
-      get 'mentioned_reports' => 'mentions#mentioned_reports', as: 'mentioned_reports'
     end
   end
   resources :comments, only: :destroy
