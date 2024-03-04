@@ -22,33 +22,29 @@ class ReportsController < ApplicationController
     ActiveRecord::Base.transaction do
       @report = current_user.reports.new(report_params)
       if @report.save
-        begin
-          @report.create_mention
-        rescue ActiveRecord::RecordInvalid
-          flash.now[:alert] = t('views.mention.failure')
-          render :new, status: :unprocessable_entity and return
-        end
+        @report.create_mentions
         redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
       else
         render :new, status: :unprocessable_entity
       end
     end
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = t('views.mention.failure')
+    render :new, status: :unprocessable_entity
   end
 
   def update
     ActiveRecord::Base.transaction do
       if @report.update(report_params)
-        begin
-          @report.update_mention
-        rescue ActiveRecord::RecordInvalid
-          flash.now[:alert] = t('views.mention.failure')
-          render :edit, status: :unprocessable_entity and return
-        end
+          @report.update_mentions
         redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
       else
         render :edit, status: :unprocessable_entity
       end
     end
+  rescue ActiveRecord::RecordInvalid
+    flash.now[:alert] = t('views.mention.failure')
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
