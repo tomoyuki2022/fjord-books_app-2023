@@ -20,26 +20,19 @@ class Report < ApplicationRecord
     created_at.to_date
   end
 
-  def extract_ids
-    content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.map(&:to_i)
+  def mentioned_report_ids_in_content
+    content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.map(&:to_i).uniq
   end
 
-  def create_mentions
-    extracted_ids = extract_ids.uniq
-    generate_mentions(id, extracted_ids)
-  end
-
-  def update_mentions
-    extracted_ids = extract_ids.uniq
+  def create_mentions!
+    extracted_ids = mentioned_report_ids_in_content
     Mention.where(mentioning_report_id: id).destroy_all
-    generate_mentions(id, extracted_ids)
-  end
-
-  private
-
-  def generate_mentions(mentioning_report, mentioned_reports)
-    mentioned_reports.each do |mentioned_report|
-      Mention.create!(mentioning_report_id: mentioning_report, mentioned_report_id: mentioned_report)
+    extracted_ids.each do |extracted_id|
+      Mention.create!(mentioning_report_id: id, mentioned_report_id: extracted_id)
     end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 end
