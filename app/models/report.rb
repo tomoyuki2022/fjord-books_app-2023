@@ -24,15 +24,11 @@ class Report < ApplicationRecord
     content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.map(&:to_i).uniq
   end
 
-  def create_mentions!
+  def create_mentions
     extracted_ids = mentioned_report_ids_in_content
     Mention.where(mentioning_report_id: id).destroy_all
-    extracted_ids.each do |extracted_id|
-      Mention.create!(mentioning_report_id: id, mentioned_report_id: extracted_id)
+    extracted_ids.all? do |extracted_id|
+      Mention.create(mentioning_report_id: id, mentioned_report_id: extracted_id).valid?
     end
-
-    true
-  rescue ActiveRecord::RecordInvalid
-    false
   end
 end
