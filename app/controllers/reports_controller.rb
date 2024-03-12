@@ -19,20 +19,36 @@ class ReportsController < ApplicationController
   def edit; end
 
   def create
-    @report = current_user.reports.new(report_params)
+    ActiveRecord::Base.transaction do
+      @report = current_user.reports.new(report_params)
 
-    if @report.save
-      redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
-    else
-      render :new, status: :unprocessable_entity
+      if @report.save
+        if @report.create_mentions
+          redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
+        else
+          flash.now[:alert] = t('views.mention.failure')
+          render :new, status: :unprocessable_entity
+          raise ActiveRecord::Rollback
+        end
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
   end
 
   def update
-    if @report.update(report_params)
-      redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
-    else
-      render :edit, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      if @report.update(report_params)
+        if @report.create_mentions
+          redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
+        else
+          flash.now[:alert] = t('views.mention.failure')
+          render :edit, status: :unprocessable_entity
+          raise ActiveRecord::Rollback
+        end
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
