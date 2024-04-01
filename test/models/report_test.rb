@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class ReportTest < ActiveSupport::TestCase
-  test 'should return true when user is editable' do
+  test 'editable?' do
     alice = users(:alice)
     bob = users(:bob)
     alice_report = reports(:alice_report)
