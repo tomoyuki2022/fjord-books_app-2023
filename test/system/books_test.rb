@@ -22,29 +22,31 @@ class BooksTest < ApplicationSystemTestCase
     visit books_url
     click_on '本の新規作成'
 
-    fill_in 'タイトル', with: @book.title
-    fill_in 'メモ', with: @book.memo
+    fill_in 'タイトル', with: '達人プログラマー'
+    fill_in 'メモ', with: '面白いです！'
     click_on '登録する'
 
     assert_text '本が作成されました。'
-    click_on '本の一覧に戻る'
+    assert_text '達人プログラマー'
+    assert_text '面白いです！'
   end
 
   test 'should update Book' do
     visit book_url(@book)
-    click_on 'この本を編集', match: :first
+    click_on 'この本を編集'
 
-    fill_in 'タイトル', with: @book.title
-    fill_in 'メモ', with: @book.memo
+    fill_in 'タイトル', with: 'パーフェクトRuby on Rails'
+    fill_in 'メモ', with: 'わかりやすかった！'
     click_on '更新する'
 
     assert_text '本が更新されました'
-    click_on '本の一覧に戻る'
+    assert_text 'パーフェクトRuby on Rails'
+    assert_text 'わかりやすかった！'
   end
 
   test 'should destroy Book' do
     visit book_url(@book)
-    click_on 'この本を削除', match: :first
+    click_on 'この本を削除'
 
     assert_text '本が削除されました'
   end
